@@ -15,8 +15,6 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: cluster-demo-1    # TODO: update to cluster name
   GKE_ZONE: us-central1-c   # TODO: update to cluster zone
-  MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-  MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
   build:
@@ -30,26 +28,45 @@ jobs:
       with:
         java-version: 11
         server-id: docker.io
-        server-username: ${{ env.MAVEN_USERNAME }}
-        server-password: ${{ env.MAVEN_PASSWORD }}
+        server-username: MAVEN_USERNAME
+        server-password: MAVEN_PASSWORD
 
     - name: Build and Push user-service
       run: mvn package dockerfile:push --file user-service/pom.xml
+      env:
+          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build and Push department-service
       run: mvn package dockerfile:push --file department-service/pom.xml
+      env:
+          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build and Push cloud-config-server
       run: mvn package dockerfile:push --file cloud-config-server/pom.xml
+      env:
+          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build and Push cloud-gateway
       run: mvn package dockerfile:push --file cloud-gateway/pom.xml
+      env:
+          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build and Push hystrix-dashboard
       run: mvn package dockerfile:push --file hystrix-dashboard/pom.xml
+      env:
+          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
 
     - name: Build and Push service-registry
       run: mvn package dockerfile:push --file service-registry/pom.xml
+      env:
+          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
   Deploy:
     needs: build
