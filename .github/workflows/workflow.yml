@@ -10,9 +10,8 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER: cluster-demo-1    # TODO: update to cluster name
+  GKE_CLUSTER: my-first-cluster-1    # TODO: update to cluster name
   GKE_ZONE: us-central1-c   # TODO: update to cluster zone
-
 
 jobs:
   build:
